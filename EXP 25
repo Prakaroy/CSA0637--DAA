@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+// Function to check if a number is perfect
+int isPerfect(int num) {
+    int sum = 0;
+    for (int i = 1; i <= num / 2; i++) {
+        if (num % i == 0) {
+            sum += i;
+        }
+    }
+    return (sum == num);
+}
+
+// Function to print perfect numbers within a given range
+void findPerfectNumbers(int start, int end) {
+    printf("Perfect numbers between %d and %d are: ", start, end);
+    for (int i = start; i <= end; i++) {
+        if (isPerfect(i)) {
+            printf("%d ", i);
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    int start, end;
+    
+    // Input range from user
+    printf("Enter the start and end of the range: ");
+    scanf("%d %d", &start, &end);
+    
+    // Find and print perfect numbers within the range
+    findPerfectNumbers(start, end);
+    
+    return 0;
+}
