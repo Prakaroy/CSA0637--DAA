@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+// Function to calculate binomial coefficient C(n, k)
+int binomialCoeff(int n, int k) {
+    if (k == 0 || k == n)
+        return 1;
+    return binomialCoeff(n - 1, k - 1) + binomialCoeff(n - 1, k);
+}
+
+// Function to print Pascal's Triangle
+void printPascalTriangle(int numRows) {
+    for (int line = 0; line < numRows; line++) {
+        // Print spaces to align the triangle
+        for (int i = 0; i < numRows - line - 1; i++)
+            printf(" ");
+
+        for (int col = 0; col <= line; col++)
+            printf("%d ", binomialCoeff(line, col));
+        
+        printf("\n");
+    }
+}
+
+int main() {
+    int numRows;
+
+    // Input the number of rows for Pascal's Triangle
+    printf("Enter the number of rows for Pascal's Triangle: ");
+    scanf("%d", &numRows);
+
+    // Print Pascal's Triangle
+    printPascalTriangle(numRows);
+
+    return 0;
+}
