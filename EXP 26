@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define V 4 // Number of vertices (cities)
+
+// Function to find the minimum of two numbers
+int min(int a, int b) {
+    return (a < b) ? a : b;
+}
+
+// Function to solve the TSP using dynamic programming
+int tsp(int graph[][V], int mask, int pos, int dp[][V]) {
+    // If all cities have been visited, return the cost of going back to the starting city
+    if (mask == (1 << V) - 1) {
+        return graph[pos][0];
+    }
+
+    // If this subproblem has already been solved, return its result
+    if (dp[mask][pos] != -1) {
+        return dp[mask][pos];
+    }
+
+    // Initialize the result for this subproblem
+    int ans = INT_MAX;
+
+    // Try to visit all cities not yet visited
+    for (int city = 0; city < V; city++) {
+        if (!(mask & (1 << city))) { // Check if the city has not been visited
+            int newAns = graph[pos][city] + tsp(graph, mask | (1 << city), city, dp);
+            ans = min(ans, newAns);
+        }
+    }
+
+    // Save the result of this subproblem in the DP table
+    return dp[mask][pos] = ans;
+}
+
+int main() {
+    int graph[V][V] = {
+        {0, 10, 15, 20},
+        {10, 0, 35, 25},
+        {15, 35, 0, 30},
+        {20, 25, 30, 0}
+    };
+
+    // DP table to store solutions to subproblems
+    int dp[1 << V][V];
+
+    // Initialize DP table with -1
+    for (int i = 0; i < (1 << V); i++) {
+        for (int j = 0; j < V; j++) {
+            dp[i][j] = -1;
+        }
+    }
+
+    // Start the TSP from city 0
+    int mask = 1; // Set the first bit to represent the starting city
+    int startCity = 0;
+    int minCost = tsp(graph, mask, startCity, dp);
+
+    printf("The minimum cost of the Traveling Salesman Problem is: %d\n", minCost);
+
+    return 0;
+}
