@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+// Function to print spaces
+void printSpaces(int n) {
+    if (n <= 0)
+        return;
+    printf(" ");
+    printSpaces(n - 1);
+}
+
+// Function to print numbers in pyramid shape
+void printPattern(int n) {
+    if (n <= 0)
+        return;
+    printSpaces(n);
+    for (int i = 1; i <= (2 * (5 - n) + 1); i++)
+        printf("%d", i);
+    printf("\n");
+    printPattern(n - 1);
+}
+
+int main() {
+    int height = 5; // Height of the pyramid
+    printPattern(height);
+    return 0;
+}
