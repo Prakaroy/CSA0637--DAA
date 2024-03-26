@@ -1,0 +1,34 @@
+#include <stdio.h>
+
+// Function to calculate binomial coefficient using dynamic programming
+unsigned long long binomialCoefficient(int n, int k) {
+    unsigned long long C[n+1][k+1];
+    int i, j;
+
+    // Calculate value of Binomial Coefficient in bottom-up manner
+    for (i = 0; i <= n; i++) {
+        for (j = 0; j <= i && j <= k; j++) {
+            if (j == 0 || j == i)
+                C[i][j] = 1; // Base Cases
+            else
+                C[i][j] = C[i-1][j-1] + C[i-1][j]; // Calculate using previously stored values
+        }
+    }
+    return C[n][k];
+}
+
+int main() {
+    int n, k;
+    printf("Enter the value of n and k (n choose k): ");
+    scanf("%d %d", &n, &k);
+
+    // Check for valid input
+    if (k < 0 || k > n) {
+        printf("Invalid input!\n");
+        return 1;
+    }
+
+    // Calculate and print the binomial coefficient
+    printf("Binomial Coefficient of %d choose %d is %llu\n", n, k, binomialCoefficient(n, k));
+    return 0;
+}
