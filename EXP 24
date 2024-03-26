@@ -1,0 +1,25 @@
+#include <stdio.h>
+
+// Recursive function to reverse a number
+int reverse(int num, int rev) {
+    if (num == 0)
+        return rev;
+    else
+        return reverse(num / 10, rev * 10 + num % 10);
+}
+
+int main() {
+    int num, reversedNum;
+    
+    // Input the number
+    printf("Enter a number: ");
+    scanf("%d", &num);
+    
+    // Call the reverse function
+    reversedNum = reverse(num, 0);
+    
+    // Output the reversed number
+    printf("Reverse of %d is %d\n", num, reversedNum);
+    
+    return 0;
+}
