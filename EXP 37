@@ -1,0 +1,56 @@
+#include <stdio.h>
+
+#define MAX_ITEMS 100
+#define MAX_CONTAINERS 100
+
+void containerLoader(int items[], int n, int containerCapacity) {
+    int containers[MAX_CONTAINERS][MAX_ITEMS] = {0}; // To store the items loaded in each container
+    int containerWeights[MAX_CONTAINERS] = {0}; // To store the total weight loaded in each container
+    int containerCount = 0; // Number of containers used
+
+    for (int i = 0; i < n; i++) {
+        int currentItem = items[i];
+        int loaded = 0; // Flag to indicate if the current item is loaded
+
+        // Try to load the item in existing containers
+        for (int j = 0; j < containerCount; j++) {
+            if (containerWeights[j] + currentItem <= containerCapacity) {
+                containers[j][containerWeights[j]] = currentItem;
+                containerWeights[j] += currentItem;
+                loaded = 1;
+                break;
+            }
+        }
+
+        // If the item couldn't be loaded in existing containers, create a new container
+        if (!loaded) {
+            containers[containerCount][containerWeights[containerCount]] = currentItem;
+            containerWeights[containerCount] += currentItem;
+            containerCount++;
+        }
+    }
+
+    // Display the loaded containers
+    printf("Loaded Containers:\n");
+    for (int i = 0; i < containerCount; i++) {
+        printf("Container %d: ", i + 1);
+        for (int j = 0; j < MAX_ITEMS; j++) {
+            if (containers[i][j] != 0)
+                printf("%d ", containers[i][j]);
+            else
+                break;
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int items[] = {10, 20, 30, 10, 40, 50}; // Example items
+    int n = sizeof(items) / sizeof(items[0]);
+    int containerCapacity = 60; // Example container capacity
+
+    containerLoader(items, n, containerCapacity);
+
+    return 0;
+}
+
