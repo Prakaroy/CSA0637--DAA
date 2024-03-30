@@ -1,18 +1,13 @@
 #include <stdio.h>
 
-#define MAX_ITEMS 100
-#define MAX_CONTAINERS 100
-
 void containerLoader(int items[], int n, int containerCapacity) {
-    int containers[MAX_CONTAINERS][MAX_ITEMS] = {0}; // To store the items loaded in each container
-    int containerWeights[MAX_CONTAINERS] = {0}; // To store the total weight loaded in each container
-    int containerCount = 0; // Number of containers used
+    int containers[MAX_CONTAINERS][MAX_ITEMS] = {0};
+    int containerWeights[MAX_CONTAINERS] = {0};
+    int containerCount = 0;
 
     for (int i = 0; i < n; i++) {
         int currentItem = items[i];
-        int loaded = 0; // Flag to indicate if the current item is loaded
-
-        // Try to load the item in existing containers
+        int loaded = 0;
         for (int j = 0; j < containerCount; j++) {
             if (containerWeights[j] + currentItem <= containerCapacity) {
                 containers[j][containerWeights[j]] = currentItem;
